@@ -1,0 +1,245 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <h3 class="text-dark mb-4">Products</h3>
+    
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold"><a  href="{% url 'new_product' %}" class="btn btn-primary btn-sm">New Product</a></p>
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-6 text-nowrap">
+                    <!-- <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
+                        <label class="form-label">Show
+                            <select class="d-inline-block form-select form-select-sm">
+                                <option value="10" selected="{{ num_of_rows }}">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </label>
+                    </div> -->
+                </div>
+                <div class="col-md-6">
+                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                </div>
+                
+            </div>
+
+            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                <table class="table my-0" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product</th>
+                            <th>Cost</th>
+                            <th>Retail</th>
+                            <th>Variant</th>
+                            <th>Category</th>
+                            <th>On hand</th>
+                            <th>Minimum</th>
+                            <th>Total Purchased</th>
+                            <th>Total Ordered</th>
+                            <th>Supplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for x in products %}
+                        <tr>
+                            <td>{{ x.id }}</td>          
+                            <td><a href="update/{{ x.id }}">{{ x.product_name }}</a></td>                 
+                            <td>&#8369; {{ x.price_per_piece }}</td>
+                            <td>&#8369; {{ x.retail_per_piece }}</td>
+                            <td>{{ x.variant }}</td>
+                            <td>{{ x.product_category }}</td>
+                            <td>{{ x.inventory_on_hand }}</td>
+                            <td>{{ x.minimum_required }}</td>
+                            <td>{{ x.inventory_received }}</td>
+                            <td>{{ x.inventory_shipped }}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                    <!-- <tfoot>
+                        <tr>
+                            <td><strong>ID</strong></td>
+                            <td><strong>Product</strong></td>
+                            <td><strong>Cost</strong></td>
+                            <td><strong>Retail</strong></td>
+                            <td><strong>Variant</strong></td>
+                            <td><strong>Category</strong></td>
+                            <td><strong>On hand</strong></td>
+                            <td><strong>Minimum</strong></td>
+                            <td><strong>Total Purchased</strong></td>
+                            <td><strong>Total Ordered</strong></td>
+                            <td><strong>Supplier</strong></td>
+                        </tr>
+                    </tfoot> -->
+                </table>
+            </div>
+
+
+            <!-- Pagination -->
+            <div class="row">
+                <div class="col-md-6 align-self-center">
+                </div>
+                <div class="">
+                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                        <ul class="pagination">
+                            <li class="page-item {% if not paginated_products.has_previous %} disabled {% endif %}">
+                                
+                                <a class="page-link" aria-label="Previous" href="{% if paginated_products.has_previous %} ?page={{ paginated_products.previous_page_number }} {% endif %}"><span aria-hidden="true">«</span></a>
+                                
+                            </li>
+
+                            {# Loop pages number #}
+                            {% for i in num_of_pages %}
+
+                                <li class="page-item {% if paginated_products.number == forloop.counter %} active {% endif %}"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+
+                            {%endfor%}
+
+                            <li class="page-item {% if not paginated_products.has_next %} disabled {% endif %}"><a class="page-link" aria-label="Next" href="{% if paginated_products.has_next %} ?page={{ paginated_products.next_page_number }} {% endif %}"><span aria-hidden="true">»</span></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- Has Previous: {{ paginated_products.has_previous }} <br>
+            Has Next: {{ paginated_products.has_next }} <br>
+            Next: {{ paginated_products.number|add:1 }} <br>
+            Current Page: {{ paginated_products.number }} <br>
+            Number of Pages: {{ paginated_products.paginator.num_pages}}<br> -->
+
+        </div>
+    </div>
+
+</div>
+
+<div class="container-fluid">
+
+    <div class="row">
+
+        <div class="col-lg-6 mt-3">
+            <div class="card card-shadow">
+                <div class="card-header py-3">
+                    <div class="row">
+                        <div class="col-6"><p class="text-primary m-0 fw-bold"><a  href="{% url 'new_purchase' %}" class="btn btn-primary btn-sm">Create Purchase</a></p></div>
+                        <div class="col-6 text-end"><span class="text-primary m-0 fw-bold pe-2">Recent Purchases</span></div>
+                    </div>
+                    
+                </div>
+                <div class="card-body">
+                    
+
+
+
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date Time</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for x in purchases %}
+                                <tr>
+                                    <td>{{ x.id }}</td>          
+                                    <td>{{ x.created_at }}</td>                     
+                                    <td>{{ x.product_id_id }}</td>
+                                    <td>{{ x.quantity }}</td>
+                                    <td><a class="btn btn-sm btn-primary">View</a></td>
+                                {% endfor %}
+        
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <a href="{% url 'purchases' %}">View All</a>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mt-3">
+            <div class="card card-shadow">
+                <div class="card-header py-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text-primary m-0 fw-bold"><a  href="{% url 'new_order' %}" class="btn btn-primary btn-sm">Add Order</a></p>
+                        </div>
+                        <div class="col-6 text-end"><span class="text-primary m-0 fw-bold pe-2">Recent Orders</span></div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+
+
+
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Date Time</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                {% for x in orders %}
+                                <tr>
+                                    <td>{{ x.id }}</td>          
+                                    <td>{{ x.created_at }}</td>                 
+                                    <td>{{ x.product_id_id }}</td>
+                                    <td>{{ x.quantity }}</td>
+                                    <td><a class="btn btn-sm btn-primary">View</a></td>
+                                {% endfor %}
+        
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>ID</strong></td>
+                                    <td><strong>Date Time</strong></td>
+                                    <td><strong>Product</strong></td>
+                                    <td><strong>Quantity</strong></td>
+                                    <td><strong>Action</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <a href="">View All</a>
+
+
+
+
+    
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+
+</div>
+
+    
+
+{% endblock %}

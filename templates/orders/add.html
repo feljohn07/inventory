@@ -1,0 +1,44 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+<h3 class="text-dark mb-4">Order / New Order</h3>
+
+    <div class="card shadow">
+        <div class="card-body">
+
+            <form action="save/" method="post">
+                {% csrf_token %}
+
+                <div class="col-lg-6 form-group mt-3">
+                    <label for="created_at">Date Ordered</label>
+                    <input name="created_at" type="datetime-local" class="form-control form-control-md mt-1" id="created_at" required>
+                    <small class="form-text text-muted d-none"></small>
+                </div>
+
+                <div class="col-lg-6 form-group mt-3">
+                    <label for="product_id">Product</label>
+                    <select id="product_id" name="product_id" class="form-select">
+                        <option selected>Selected Product</option>
+                        {% for x in products %}
+                        <option value="{{ x.id }}">{{ x.product_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-lg-6 form-group mt-3">
+                    <label for="quantity">Product Quantity</label>
+                    <input name="quantity" type="text" class="form-control form-control-md mt-1" id="quantity" required>
+                    <small class="form-text text-muted d-none"></small>
+                </div>
+
+                <input class="btn btn-primary mt-3" type="submit" value="Add Purchase">
+                <a class="btn btn-secondary mt-3" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

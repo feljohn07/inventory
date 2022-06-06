@@ -1,0 +1,32 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+<h3 class="text-dark mb-4">Suppliers / Update</h3>
+    <div class="card shadow">
+        <div class="card-body">
+
+            <form action="save/{{ supplier.id }}" method="post">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                    <label for="supplier" class="form-label">Supplier Name</label>
+                    <input name="supplier" type="text" class="form-control form-control-md" id="supplier" value="{{ supplier.supplier }}">
+                    <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+                
+                <div class="form-group mt-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input name="address" type="text" class="form-control form-control-md" id="supplier" value="{{ supplier.address }}">
+                    <!-- <div id="address" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+
+                <input class="btn btn-primary mt-3" type="submit" value="Save Changes">
+                <a class="btn btn-secondary mt-3" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
