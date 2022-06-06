@@ -36,6 +36,7 @@
 ### _**Products**_
 
 > **Add**
+  - Upload Product Image (To Be Implemented)
   - Supplier (Existing Supplier) (On-going) (Drop-down)
   - Product Name
   - Cost (Per Piece)
