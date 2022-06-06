@@ -1,7 +1,7 @@
 # Inventory System Functions
 
 
-_**Suppliers**_
+### _**Suppliers**_
 
 > **Add**
   - Name
@@ -16,7 +16,7 @@ _**Suppliers**_
     - The user can **on delete cascade** ( which deletes all rows of orders referencing this product ) 
     - Or the user can  **on delete set null** ( which set all the foreign keys of referencing rows to null )
 
-_**Customers**_
+### _**Customers**_
 
 > **Add**
   - First, Middle, Lastname
@@ -33,7 +33,7 @@ _**Customers**_
     - Or the user can  **on delete set null** ( which set all the foreign keys of referencing rows to null )
 
 
-_**Products**_
+### _**Products**_
 
 > **Add**
   - Supplier (Existing Supplier) (On-going) (Drop-down)
@@ -68,7 +68,7 @@ _**Products**_
       - Or the user can  **on delete set null** ( which set all the foreign keys of referencing rows to null )
 
 
-_**Purchases**_ (On Going)
+### _**Purchases**_ (On Going)
 
 > **add**
   - _Amount of Purchased product will be Added to the TOTAL PURCHASED and ON HAND_
@@ -80,7 +80,7 @@ _**Purchases**_ (On Going)
   - _If the Amount Purchased is Deleted Then the amount will reflect to TOTAL PURCHASED and ON HAND_
   - 
 
-_**Orders**_ (On Going)
+### _**Orders**_ (On Going)
 
 > **add**
   -
