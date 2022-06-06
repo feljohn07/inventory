@@ -71,9 +71,14 @@ _**Products**_
 _**Purchases**_ (On Going)
 
 > **add**
+  - _Amount of Purchased product will be Added to the TOTAL PURCHASED and ON HAND_
+  - 
 > **update**
+  - _If the Amount Purchased is Updated Then the amount will reflect to TOTAL PURCHASED and ON HAND_
+  - 
 > **delete**
-
+  - _If the Amount Purchased is Deleted Then the amount will reflect to TOTAL PURCHASED and ON HAND_
+  - 
 
 _**Orders**_ (On Going)
 
