@@ -83,8 +83,11 @@ _**Purchases**_ (On Going)
 _**Orders**_ (On Going)
 
 > **add**
+  -
 > **update**
+  -
 > **delete**
+  -
 
 ## SEARCH
 
