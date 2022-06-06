@@ -85,3 +85,9 @@ _**Orders**_ (On Going)
 > **add**
 > **update**
 > **delete**
+
+## SEARCH
+
+## DASHBOARD
+
+## GENERATE REPORT
