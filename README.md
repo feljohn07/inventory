@@ -68,14 +68,14 @@ _**Products**_
       - Or the user can  **on delete set null** ( which set all the foreign keys of referencing rows to null )
 
 
-_**Purchases**_
+_**Purchases**_ (On Going)
 
 > **add**
 > **update**
 > **delete**
 
 
-_**Orders**_
+_**Orders**_ (On Going)
 
 > **add**
 > **update**
