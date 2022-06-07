@@ -16,7 +16,7 @@ def index(request):
     # Number of rows to display
     no_rows         = 5
     # Set Up Pagination
-    paginator       = Paginator(Order.objects.all(), no_rows)
+    paginator       = Paginator(Order.objects.all().order_by('-id'), no_rows)
     # Track the page
     page            = request.GET.get('page')
     # product list
