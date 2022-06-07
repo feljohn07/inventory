@@ -3,6 +3,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 
+from django.core.paginator import Paginator
+
 from .models import Order
 from purchases.models import Product
 
@@ -10,8 +12,23 @@ from purchases.models import Product
 from datetime import datetime
 
 def index(request):
-    orders = Order.objects.all().values()
-    return render(request, 'orders/index.html', {'orders': orders})
+
+    # Number of rows to display
+    no_rows         = 5
+    # Set Up Pagination
+    paginator       = Paginator(Order.objects.all(), no_rows)
+    # Track the page
+    page            = request.GET.get('page')
+    # product list
+    orders         = paginator.get_page(page)
+    # number of pages
+    num_of_pages    = range(orders.paginator.num_pages)
+
+    context = {
+        'orders'        : orders,
+        'num_of_pages'  : num_of_pages,
+    }
+    return render(request, 'orders/index.html', context)
 
 def add_view(request):
 
