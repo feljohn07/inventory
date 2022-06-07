@@ -52,5 +52,10 @@ def add(request):
         updated_at  = datetime.now(),
     )
     purchase.save()
-    
+
+    product                     = Product.objects.get(id = request.POST['product_id'])
+    product.inventory_received  = product.inventory_received + int(request.POST['quantity'])
+    product.inventory_on_hand   = product.inventory_on_hand + int(request.POST['quantity'])
+    product.save()
+
     return HttpResponseRedirect(reverse('purchases'))
