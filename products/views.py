@@ -36,7 +36,6 @@ def index(request, *args, **kwargs):
 
     context = {
         'products'              : product,
-        # 'paginated_products'    : product,
         'num_of_pages'          : num_of_pages,
         'purchases'             : purchases,
         'orders'                : orders,
