@@ -90,30 +90,30 @@
                 <div class="">
                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                         <ul class="pagination">
-                            <li class="page-item {% if not paginated_products.has_previous %} disabled {% endif %}">
-                                
-                                <a class="page-link" aria-label="Previous" href="{% if paginated_products.has_previous %} ?page={{ paginated_products.previous_page_number }} {% endif %}"><span aria-hidden="true">«</span></a>
-                                
+                            <li class="page-item {% if not products.has_previous %} disabled {% endif %}">
+                                <a class="page-link" aria-label="Previous" href="{% if products.has_previous %} ?page={{ products.previous_page_number }} {% endif %}"><span aria-hidden="true">«</span></a>
                             </li>
 
                             {# Loop pages number #}
                             {% for i in num_of_pages %}
 
-                                <li class="page-item {% if paginated_products.number == forloop.counter %} active {% endif %}"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                                <li class="page-item {% if products.number == forloop.counter %} active {% endif %}"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
 
                             {%endfor%}
 
-                            <li class="page-item {% if not paginated_products.has_next %} disabled {% endif %}"><a class="page-link" aria-label="Next" href="{% if paginated_products.has_next %} ?page={{ paginated_products.next_page_number }} {% endif %}"><span aria-hidden="true">»</span></a></li>
+                            <li class="page-item {% if not products.has_next %} disabled {% endif %}">
+                                <a class="page-link" aria-label="Next" href="{% if products.has_next %} ?page={{ products.next_page_number }} {% endif %}"><span aria-hidden="true">»</span></a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
             </div>
 
-            <!-- Has Previous: {{ paginated_products.has_previous }} <br>
-            Has Next: {{ paginated_products.has_next }} <br>
-            Next: {{ paginated_products.number|add:1 }} <br>
-            Current Page: {{ paginated_products.number }} <br>
-            Number of Pages: {{ paginated_products.paginator.num_pages}}<br> -->
+            <!-- Has Previous: {{ products.has_previous }} <br>
+            Has Next: {{ products.has_next }} <br>
+            Next: {{ products.number|add:1 }} <br>
+            Current Page: {{ products.number }} <br>
+            Number of Pages: {{ products.paginator.num_pages}}<br> -->
 
         </div>
     </div>

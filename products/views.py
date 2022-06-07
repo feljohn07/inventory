@@ -17,26 +17,26 @@ from orders.models import Order
 def index(request, *args, **kwargs):
 
     # Number of rows to display
-    no_rows = 5
+    no_rows         = 5
     # Set Up Pagination
-    paginator   = Paginator(Product.objects.all(), no_rows)
+    paginator       = Paginator(Product.objects.all(), no_rows)
     # Track the page
-    page        = request.GET.get('page')
+    page            = request.GET.get('page')
     # product list
-    product     = paginator.get_page(page)
+    product         = paginator.get_page(page)
     # number of pages
-    num_of_pages = range(product.paginator.num_pages)
+    num_of_pages    = range(product.paginator.num_pages)
 
 
-    # Retrieve all purchases
-    purchases = Purchase.objects.all().order_by('-id')[:5]
+    # Retrieve 5 recent purchases
+    purchases       = Purchase.objects.all().order_by('-id')[:5]
 
-    # Retrieve all orders
-    orders = Order.objects.all().order_by('-id')[:5]
+    # Retrieve 5 recent orders
+    orders          = Order.objects.all().order_by('-id')[:5]
 
     context = {
         'products'              : product,
-        'paginated_products'    : product,
+        # 'paginated_products'    : product,
         'num_of_pages'          : num_of_pages,
         'purchases'             : purchases,
         'orders'                : orders,
