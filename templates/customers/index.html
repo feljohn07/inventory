@@ -76,11 +76,20 @@
                 <div class="col-md-6">
                     <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                         <ul class="pagination">
-                            <li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+                            <li class="page-item {% if not customers.has_previous %} disabled {% endif %}">
+                                <a class="page-link" aria-label="Previous" href="{% if customers.has_previous %} ?page={{ customers.previous_page_number }} {% endif %}"><span aria-hidden="true">«</span></a>
+                            </li>
+
+                            {# Loop pages number #}
+                            {% for i in num_of_pages %}
+
+                                <li class="page-item {% if customers.number == forloop.counter %} active {% endif %}"><a class="page-link" href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+
+                            {%endfor%}
+
+                            <li class="page-item {% if not customers.has_next %} disabled {% endif %}">
+                                <a class="page-link" aria-label="Next" href="{% if customers.has_next %} ?page={{ customers.next_page_number }} {% endif %}"><span aria-hidden="true">»</span></a>
+                            </li>
                         </ul>
                     </nav>
                 </div>

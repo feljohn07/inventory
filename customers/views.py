@@ -6,10 +6,29 @@ from datetime import datetime
 
 from .models import Customer
 
+# Pagination
+from django.core.paginator import Paginator
+
 
 def index(request):
-    customers = Customer.objects.all()
-    return render(request, 'customers/index.html', {'customers':customers})
+
+    # Number of rows to display
+    no_rows         = 5
+    # Set Up Pagination
+    paginator       = Paginator(Customer.objects.all(), no_rows)
+    # Track the page
+    page            = request.GET.get('page')
+    # product list
+    customers         = paginator.get_page(page)
+    # number of pages
+    num_of_pages    = range(customers.paginator.num_pages)
+
+    context = {
+        'customers'             : customers,
+        'num_of_pages'          : num_of_pages,
+    }
+
+    return render(request, 'customers/index.html', context)
 
 
 def add_view(request):
