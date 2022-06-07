@@ -6,17 +6,33 @@ from .models import Supplier
 
 from datetime import datetime
 
+# Pagination
+from django.core.paginator import Paginator
+
 
 def index(request):
-    # Retrieve all products
-    suppliers = Supplier.objects.all().values()
-    context = {
+
+    # Number of rows to display
+    no_rows         = 5
+    # Set Up Pagination
+    paginator       = Paginator(Supplier.objects.all(), no_rows)
+    # Track the page
+    page            = request.GET.get('page')
+    # product list
+    suppliers         = paginator.get_page(page)
+    # number of pages
+    num_of_pages    = range(suppliers.paginator.num_pages)
+
+    context     = {
         'suppliers': suppliers,
+        'num_of_pages': num_of_pages,
     }
     return render(request,'suppliers/index.html', context)
 
+
 def add_view(request):
     return render(request,'suppliers/add.html', {})
+
 
 def add(request):
     suppliers = Supplier(
@@ -27,13 +43,15 @@ def add(request):
     suppliers.save()
     return HttpResponseRedirect(reverse('suppliers'))
 
+
 def update_view(request, id):
     supplier = Supplier.objects.get(id=id)
     return render(request,'suppliers/update.html', {'supplier':supplier})
 
+
 def update(request, id):
     # return HttpResponse(id)
-    supplier = Supplier.objects.get(id=id)
+    supplier            = Supplier.objects.get(id=id)
     supplier.supplier   = request.POST['supplier']
     supplier.address    = request.POST['address']
     supplier.save()
