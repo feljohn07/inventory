@@ -22,7 +22,7 @@
                     <select id="product_id" name="product_id" class="form-select">
                         <option selected>Selected Product</option>
                         {% for x in products %}
-                        <option value="{{ x.id }}">{{ x.product_name }}</option>
+                        <option value='{{ x.id }}'> {{ x.product_name }} [ on hand : {{ x.inventory_on_hand }} Pcs ] </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="col-lg-6 form-group mt-3">
                     <label for="quantity">Product Quantity</label>
                     <input name="quantity" type="text" class="form-control form-control-md mt-1" id="quantity" required>
-                    <small class="form-text text-muted d-none"></small>
+                    <small class="form-text text-muted d-none">{{ error }}</small>
                 </div>
 
                 <input class="btn btn-primary mt-3" type="submit" value="Add Purchase">

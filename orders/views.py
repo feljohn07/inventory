@@ -40,11 +40,18 @@ def add_view(request):
 def add(request):
 
     order = Order(
-        product_id  = Product.objects.get(id = request.POST['product_id']),
+        product_id  = Product.objects.get(id = request.POST['product_id']), # get the instance of the Model object Product
         quantity    = request.POST['quantity'],
         created_at  = request.POST['created_at'],
         updated_at  = datetime.now(),
     )
+
+    # Product Instance
+    product = Product.objects.get(id = request.POST['product_id'])
+    product.inventory_shipped   = product.inventory_shipped + int(request.POST['quantity'])
+    product.inventory_on_hand   = product.inventory_on_hand - int(request.POST['quantity'])
+
     order.save()
+    product.save()
 
     return HttpResponseRedirect(reverse('orders'))
