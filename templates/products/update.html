@@ -11,6 +11,13 @@
                 {% csrf_token %}
 
                 <div class="form-group mb-3">
+                    <label for="supplier_id">Supplier</label>
+                    <select id="supplier_id" name="supplier_id" class="form-select" disabled>
+                        <option value="" selected >{{ supplier }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
                     <label for="product_name" class="form-label">Product Name</label>
                     <input name="product_name" type="text" class="form-control form-control-md" id="product_name" value="{{ product.product_name }}">
                     <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->

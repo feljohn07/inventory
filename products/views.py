@@ -79,7 +79,10 @@ def add(request):
 
 def update_view(request, id):
     product = Product.objects.get(id=id)
-    return render(request,'products/update.html', {'product':product})
+    # return HttpResponse(product.supplier_id)
+    supplier = Supplier.objects.get(id = product.supplier_id)
+
+    return render(request,'products/update.html', {'product':product, 'supplier':supplier.supplier})
 
 
 def update(request, id):
