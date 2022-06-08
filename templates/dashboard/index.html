@@ -14,7 +14,15 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
                             <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span>Inventory</span></div>
-                            <div class="text-dark fw-bold h5 mb-0"><span>{{ inventory_on_hand|intcomma }}</span></div>
+                            <div class="text-dark fw-bold h5 mb-0">
+
+                                {% if inventory_on_hand is None %}
+                                    <span> 0 </span>
+                                {% else %}
+                                    <span>{{ inventory_on_hand|intcomma }}</span>
+                                {% endif %}
+                                
+                            </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-boxes fa-2x text-gray-300"></i></div>
                     </div>
@@ -40,7 +48,15 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
                             <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Inventory Cost</span></div>
-                            <div class="text-dark fw-bold h5 mb-0">P<span>{{ inventory_cost|floatformat:2|intcomma }}</span></div>
+                            <div class="text-dark fw-bold h5 mb-0">
+
+                                {% if inventory_cost is None %}
+                                    P 0.00
+                                {% else %}
+                                    P<span>{{ inventory_cost|floatformat:2|intcomma }}</span>
+                                {% endif %}
+
+                            </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                     </div>
@@ -54,7 +70,15 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
                             <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Inventory Value</span></div>
-                            <div class="text-dark fw-bold h5 mb-0">P<span>{{ inventory_value|floatformat:2|intcomma }}</span></div>
+                            <div class="text-dark fw-bold h5 mb-0">
+
+                                {% if inventory_value is None %}
+                                    P 0.00
+                                {% else %}
+                                    P<span>{{ inventory_value|floatformat:2|intcomma }}</span>
+                                {% endif %}
+                                
+                            </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                     </div>
@@ -68,7 +92,7 @@
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
                             <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Potential Sales Margin</span></div>
-                            <div class="text-dark fw-bold h5 mb-0">P<span>{{ sales_margin|floatformat:2|intcomma }}</span></div>
+                            <div class="text-dark fw-bold h5 mb-0">P<span> {{ sales_margin|floatformat:2|intcomma }}</span></div>
                         </div>
                         <div class="col-auto"><i class="fas fa-hand-holding-usd fa-2x text-gray-300"></i></div>
                     </div>
@@ -81,8 +105,16 @@
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
-                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Today Purchase</span></div>
-                            <div class="text-dark fw-bold h5 mb-0"><span>{{ inventory_on_hand|intcomma }}</span></div>
+                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Today Purchase (In-going)</span></div>
+                            <div class="text-dark fw-bold h5 mb-0">
+
+                                {% if inventory_on_hand is None %}
+                                    <span> 0 </span>
+                                {% else %}
+                                    <span>{{ inventory_on_hand|intcomma }}</span>
+                                {% endif %}
+                                
+                            </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-arrow-down fa-2x text-gray-300"></i></div>
                     </div>
@@ -95,8 +127,16 @@
                 <div class="card-body">
                     <div class="row align-items-center no-gutters">
                         <div class="col me-2">
-                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Today Orders</span></div>
-                            <div class="text-dark fw-bold h5 mb-0"><span>{{ inventory_on_hand|intcomma }}</span></div>
+                            <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Today Orders (out-going)</span></div>
+                            <div class="text-dark fw-bold h5 mb-0">
+                                
+                                {% if inventory_on_hand is None %}
+                                    <span> 0 </span>
+                                {% else %}
+                                    <span>{{ inventory_on_hand|intcomma }}</span>
+                                {% endif %}
+                                
+                            </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-arrow-up fa-2x text-gray-300"></i></div>
                     </div>
