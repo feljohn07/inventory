@@ -92,13 +92,13 @@ def update(request, id):
     product.variant             = request.POST['variant']
     product.product_category    = request.POST['product_category']
 
-    if int(request.POST['inventory_received']) > 0:
-        product.inventory_received  = product.inventory_received + int(request.POST['inventory_received'])
-    else:
-        product.inventory_shipped  = product.inventory_shipped + int(request.POST['inventory_received'])
+    # Add or 
+    # if int(request.POST['inventory_received']) > 0:
+    #     product.inventory_received  = product.inventory_received + int(request.POST['inventory_received'])
+    # else:
+    #     product.inventory_shipped  = product.inventory_shipped + int(request.POST['inventory_received'])
 
-    # product.inventory_shipped   = request.POST['inventory_shipped']
-    product.inventory_on_hand   = product.inventory_on_hand + int(request.POST['inventory_received'])
+    # product.inventory_on_hand   = product.inventory_on_hand + int(request.POST['inventory_received'])
     product.minimum_required    = request.POST['minimum_required'] 
 
     product.save()
