@@ -11,11 +11,15 @@
             <form action="save/" method="post">
                 {% csrf_token %}
 
-                <!-- <div class="form-group mt-3">
-                    <label for="supplier_name">Supplier</label>
-                    <input name="supplier_name" type="text" class="form-control form-control-md mt-1" id="supplier_name" required>
-                    <small class="form-text text-muted d-none"></small>
-                </div> -->
+                <div class="form-group mt-3">
+                    <label for="supplier_id">Supplier</label>
+                    <select id="supplier_id" name="supplier_id" class="form-select">
+                        <option selected>Selected Supplier</option>
+                        {% for x in suppliers %}
+                        <option value="{{ x.id }}">{{ x.supplier }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <!-- <div class="input-group mb-3">
                     <div class="custom-file">

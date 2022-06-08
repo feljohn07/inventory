@@ -1,3 +1,4 @@
+from datetime import datetime
 from math import prod
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -9,12 +10,17 @@ from django.core.paginator import Paginator
 # Models
 from .models import Product
 
+# Supplier Model
+from suppliers.models import Supplier
+
 # Purchase and Order Models
 from purchases.models import Purchase
 from orders.models import Order
 
 
 def index(request, *args, **kwargs):
+
+    # return HttpResponse( Product.objects.all().values() )
 
     # Number of rows to display
     no_rows         = 5
@@ -45,11 +51,17 @@ def index(request, *args, **kwargs):
 
 
 def add_view(request):
-    return render(request,'products/add.html', {})
+
+    suppliers = Supplier.objects.all()
+    
+    return render(request,'products/add.html', {'suppliers': suppliers})
 
 
 def add(request):
+
+    # return HttpResponse(request.POST['supplier_id'])
     product = Product(
+        supplier_id         = request.POST['supplier_id'], 
         product_name        = request.POST['product_name'], 
         price_per_piece     = request.POST['price_per_piece'],
         retail_per_piece    = request.POST['retail_per_piece'],
@@ -58,7 +70,9 @@ def add(request):
         inventory_received  = request.POST['inventory_received'],
         inventory_on_hand   = request.POST['inventory_received'],
         minimum_required    = request.POST['minimum_required'],
+        updated_at          = datetime.now(),
     )
+    # return HttpResponse()
     product.save()
     return HttpResponseRedirect(reverse('products'))
 

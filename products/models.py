@@ -1,3 +1,4 @@
+from datetime import datetime
 from itertools import product
 from django.db import models
 from django.forms import CharField, DateTimeField
@@ -15,7 +16,11 @@ class Product(models.Model):
     inventory_on_hand   = models.IntegerField(default=0, blank=True, null=True)
     minimum_required    = models.IntegerField(default=0, blank=True, null=True)
 
+    supplier            = models.ForeignKey( Supplier , null=True ,on_delete=models.SET_NULL)
+    created_at          = models.DateField( default = datetime.now)
+    updated_at          = models.DateField()
 
+    
 
 
 # class Orders(models.Model):
