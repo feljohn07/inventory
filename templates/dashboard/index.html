@@ -108,10 +108,10 @@
                             <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Today Purchase (In-going)</span></div>
                             <div class="text-dark fw-bold h5 mb-0">
 
-                                {% if inventory_on_hand is None %}
+                                {% if purchases is None %}
                                     <span> 0 </span>
                                 {% else %}
-                                    <span>{{ inventory_on_hand|intcomma }}</span>
+                                    <span>{{ purchases|intcomma }}</span>
                                 {% endif %}
                                 
                             </div>
@@ -130,10 +130,10 @@
                             <div class="text-uppercase text-success fw-bold text-xs mb-1"><span>Today Orders (out-going)</span></div>
                             <div class="text-dark fw-bold h5 mb-0">
                                 
-                                {% if inventory_on_hand is None %}
+                                {% if orders is None %}
                                     <span> 0 </span>
                                 {% else %}
-                                    <span>{{ inventory_on_hand|intcomma }}</span>
+                                    <span>{{ orders|intcomma }}</span>
                                 {% endif %}
                                 
                             </div>
