@@ -84,11 +84,11 @@
 ### _**Orders**_ (On Going)
 
 > **add**
-  -
+  - _Amount of Ordered product will be Added to the TOTAL Ordered and  deduct to inventory ON HAND_
 > **update**
-  -
+  -_If the Amount Ordered is Updated Then the amount will reflect to TOTAL PURCHASED and ON HAND_
 > **delete**
-  -
+  -_If the Amount Ordered is Deleted Then the amount will reflect to TOTAL PURCHASED and ON HAND_
 
 ## SEARCH
 
