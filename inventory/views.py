@@ -1,8 +1,10 @@
+from calendar import month
 from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
 
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Count
+from django.db.models.functions import TruncMonth, TruncYear
 
 from products.models import Product
 
@@ -11,6 +13,8 @@ from purchases.models import Purchase
 from orders.models import Order
 
 from datetime import date, datetime
+
+from rest_framework import serializers
 
 # Import models from Purchases, products, orders, suppliers
 
@@ -42,12 +46,75 @@ def dashboard(request):
         created_at__day = datetime.now().day,
     ).count()
 
-    
+    # Try catch if subracting inventory value with the cost (error occurs when one of the two has no value)
     try:
         sales_margin = inventory_value['value'] - inventory_cost['cost']
     except:
         sales_margin = 0;
 
+
+    get_monthly_sales = (Order.objects
+                            .annotate(month = TruncMonth('created_at'))
+                            .values('month')
+                            .filter(created_at__year = datetime.now().year)
+                            .annotate(order_count = Count('created_at'))
+                            .values('month','order_count')
+                            .order_by()
+                        )
+
+    monthly_dict = [0,0,0,0,0,0,0,0,0,0,0,0,]
+        
+    for x in get_monthly_sales:
+        if datetime.strftime(x['month'], "%m") == '00':
+            monthly_dict[0] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '01':
+            monthly_dict[1] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '02':
+            monthly_dict[2] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '03':
+            monthly_dict[3] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '04':
+            monthly_dict[4] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '05':
+            monthly_dict[5] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '06':
+            monthly_dict[6] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '07':
+            monthly_dict[7] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '08':
+            monthly_dict[8] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '09':
+            monthly_dict[9] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '10':
+            monthly_dict[10] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+        if datetime.strftime(x['month'], "%m") == '11':
+            monthly_dict[11] = x['order_count']
+            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
+
+
+    # return HttpResponse(get_monthly_sales)
     context = {
         'count': count,
         'inventory_on_hand': inventory_on_hand['inventory_on_hand__sum'],
@@ -56,6 +123,7 @@ def dashboard(request):
         'sales_margin': sales_margin,
         'purchases': purchases,
         'orders': orders,
+        'get_monthly_sales': monthly_dict, # return a json string
     }
 
     return render(request, 'dashboard/index.html', context)
