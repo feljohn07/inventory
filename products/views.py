@@ -65,10 +65,27 @@ def index(request, *args, **kwargs):
 
 
     # Retrieve 5 recent purchases
-    purchases       = Purchase.objects.all().order_by('-id')[:5]
+    purchases       = ( Purchase.objects
+                                .all()
+                                .values(
+                                    'id',
+                                    'created_at',
+                                    'product_id__product_name',
+                                    'quantity',
+                                    )
+                                .order_by('-id')[:5]
+    )
 
     # Retrieve 5 recent orders
-    orders          = Order.objects.all().order_by('-id')[:5]
+    orders          = (Order.objects
+                            .all()
+                            .values(
+                                    'id',
+                                    'created_at',
+                                    'product_id__product_name',
+                                    'quantity',
+                                    )
+                            .order_by('-id')[:5])
 
     context = {
         'products'              : product,
