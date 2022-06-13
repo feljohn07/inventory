@@ -44,6 +44,7 @@
                             <th>Total Purchased</th>
                             <th>Total Ordered</th>
                             <th>Supplier</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,7 @@
                             <td>{{ x.inventory_received }}</td>
                             <td>{{ x.inventory_shipped }}</td>
                             <td>{{ x.supplier__supplier }}</td>
+                            <td><button class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}">Delete</button></td>
                         </tr>
                         {% endfor %}
 

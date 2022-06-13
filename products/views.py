@@ -20,24 +20,6 @@ from orders.models import Order
 
 def index(request, *args, **kwargs):
 
-
-    # return HttpResponse(Product.objects
-    #                             .all()
-    #                             .values(
-    #                                 'id',
-    #                                 'product_name',
-    #                                 'price_per_piece',
-    #                                 'retail_per_piece',
-    #                                 'variant',
-    #                                 'product_category',
-    #                                 'inventory_received',
-    #                                 'inventory_shipped',
-    #                                 'inventory_on_hand',
-    #                                 'minimum_required',
-    #                                 'supplier__supplier'
-    #                                 ) 
-    #                             )
-
     # Number of rows to display
     no_rows         = 5
     # Set Up Pagination
@@ -153,5 +135,12 @@ def update(request, id):
 
     product.save()
 
+    return HttpResponseRedirect(reverse('products'))
+
+def delete(request, id):
+    product = Product.objects.get(id=id)
+
+    # return HttpResponse(product)
+    product.delete()
     return HttpResponseRedirect(reverse('products'))
 
