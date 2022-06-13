@@ -30,7 +30,6 @@ def index(request, *args, **kwargs):
                                     'product_name',
                                     'price_per_piece',
                                     'retail_per_piece',
-                                    'variant',
                                     'product_category',
                                     'inventory_received',
                                     'inventory_shipped',
@@ -94,7 +93,6 @@ def add(request):
         product_name        = request.POST['product_name'], 
         price_per_piece     = request.POST['price_per_piece'],
         retail_per_piece    = request.POST['retail_per_piece'],
-        variant             = request.POST['variant'],
         product_category    = request.POST['product_category'],
         inventory_received  = request.POST['inventory_received'],
         inventory_on_hand   = request.POST['inventory_received'],
@@ -121,16 +119,7 @@ def update(request, id):
     product.product_name        = request.POST['product_name']
     product.price_per_piece     = request.POST['price_per_piece']
     product.retail_per_piece    = request.POST['retail_per_piece']
-    product.variant             = request.POST['variant']
     product.product_category    = request.POST['product_category']
-
-    # Add or 
-    # if int(request.POST['inventory_received']) > 0:
-    #     product.inventory_received  = product.inventory_received + int(request.POST['inventory_received'])
-    # else:
-    #     product.inventory_shipped  = product.inventory_shipped + int(request.POST['inventory_received'])
-
-    # product.inventory_on_hand   = product.inventory_on_hand + int(request.POST['inventory_received'])
     product.minimum_required    = request.POST['minimum_required'] 
 
     product.save()
