@@ -67,63 +67,51 @@ def dashboard(request):
     for x in get_monthly_sales:
         if datetime.strftime(x['month'], "%m") == '00':
             monthly_dict[0] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '01':
             monthly_dict[1] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '02':
             monthly_dict[2] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '03':
             monthly_dict[3] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '04':
             monthly_dict[4] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '05':
             monthly_dict[5] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '06':
             monthly_dict[6] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '07':
             monthly_dict[7] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '08':
             monthly_dict[8] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '09':
             monthly_dict[9] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '10':
             monthly_dict[10] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
         if datetime.strftime(x['month'], "%m") == '11':
             monthly_dict[11] = x['order_count']
-            # print(datetime.strftime(x['month'], "%m") + ' ' + str(x['order_count']))
 
 
     # return HttpResponse(get_monthly_sales)
     context = {
         'count': count,
-        'inventory_on_hand': inventory_on_hand['inventory_on_hand__sum'],
-        'inventory_cost': inventory_cost['cost'],
-        'inventory_value': inventory_value['value'],
-        'sales_margin': sales_margin,
-        'purchases': purchases,
-        'orders': orders,
-        'get_monthly_sales': monthly_dict, # return a json string
+        'inventory_on_hand' : inventory_on_hand['inventory_on_hand__sum'],
+        'inventory_cost'    : inventory_cost['cost'],
+        'inventory_value'   : inventory_value['value'],
+        'sales_margin'      : sales_margin,
+        'purchases'         : purchases,
+        'orders'            : orders,
+        'get_monthly_sales' : monthly_dict, # return a json string
     }
 
     return render(request, 'dashboard/index.html', context)

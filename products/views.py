@@ -20,12 +20,42 @@ from orders.models import Order
 
 def index(request, *args, **kwargs):
 
-    # return HttpResponse( Product.objects.all().values() )
+
+    # return HttpResponse(Product.objects
+    #                             .all()
+    #                             .values(
+    #                                 'id',
+    #                                 'product_name',
+    #                                 'price_per_piece',
+    #                                 'retail_per_piece',
+    #                                 'variant',
+    #                                 'product_category',
+    #                                 'inventory_received',
+    #                                 'inventory_shipped',
+    #                                 'inventory_on_hand',
+    #                                 'minimum_required',
+    #                                 'supplier__supplier'
+    #                                 ) 
+    #                             )
 
     # Number of rows to display
     no_rows         = 5
     # Set Up Pagination
-    paginator       = Paginator(Product.objects.all(), no_rows)
+    paginator       = Paginator(Product.objects
+                                .all()
+                                .values(
+                                    'id',
+                                    'product_name',
+                                    'price_per_piece',
+                                    'retail_per_piece',
+                                    'variant',
+                                    'product_category',
+                                    'inventory_received',
+                                    'inventory_shipped',
+                                    'inventory_on_hand',
+                                    'minimum_required',
+                                    'supplier__supplier'
+                                    ) , no_rows)
     # Track the page
     page            = request.GET.get('page')
     # product list
