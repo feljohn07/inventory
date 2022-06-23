@@ -94,4 +94,15 @@
 
 ## DASHBOARD
 
+>Total Inventory
+>Number of Products
+>Inventory Cost
+>Inventory Value
+>Potential Sales Margin
+>Daily Purchases (Out-Going Products)
+>Daily Orders (Out-Going Products)
+
+>Line Chart - Order Overview (Monthly Orders)
+>Product Value - By Category
+
 ## GENERATE REPORT
