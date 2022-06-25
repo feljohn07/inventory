@@ -150,8 +150,8 @@
                     type: 'POST',
                     url: "{% url 'update_quantity' %}",
                     data: {
-                        "id":  $('#product_id').val(),
-                        "quantity": $('#product_quantity').val(),
+                        id:  $('#product_id').val(),
+                        quantity: $('#product_quantity').val(),
                     },
                     success: function (response) {
 
