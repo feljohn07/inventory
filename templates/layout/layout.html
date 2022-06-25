@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>Simple Inventory System</title>
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/Nunito.css' %}">
     <link rel="stylesheet" href="{% static 'assets/fonts/fontawesome-all.min.css' %}">
@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/search.css' %}">
     <script src="{% static 'assets/js/search.js' %}"></script>
     <script src="{% static 'assets/js/chart.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.js' %}"></script>
 </head>
 
 <body id="page-top">
@@ -130,10 +131,18 @@
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
+
 <script>
+    
+
+(function($){
+
     $(document).ready(function() {
         $('.mdb-select').materialSelect();
     });
+
+})(jQuery);
+
 </script>
 
 
