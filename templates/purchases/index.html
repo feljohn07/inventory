@@ -32,11 +32,11 @@
                 <table class="table my-0" id="dataTable">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>Purchase ID</th>
                             <th>Date Time</th>
                             <th>Product</th>
                             <th>Quantity</th>
-                            <th>Action</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -45,22 +45,16 @@
                         <tr>
                             <td>{{ x.id }}</td>          
                             <td>{{ x.created_at }}</td>                     
-                            <td>{{ x.product_id_id }}</td>
+                            <td>{{ x.product_id__product_name }}</td>
                             <td>{{ x.quantity }}</td>
-                            <td><a class="btn btn-sm btn-primary">View</a></td>
+                            <td>
+                                <a class="btn btn-sm btn-warning m-1" onclick="edit(this)" data-id="{{ x.id }}" data-name="{{ x.product_id__product_name }}" data-qty="{{ x.quantity }}">Edit Qty</a>
+                                <button class="btn btn-sm btn-danger m-1" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}">Delete</button>
+                            </td>
                         {% endfor %}
 
                         </tr>
                     </tbody>
-                    <!-- <tfoot>
-                        <tr>
-                            <td><strong>ID</strong></td>
-                            <td><strong>Date Time</strong></td>
-                            <td><strong>Product</strong></td>
-                            <td><strong>Quantity</strong></td>
-                            <td><strong>Action</strong></td>
-                        </tr>
-                    </tfoot> -->
                 </table>
             </div>
 
@@ -93,5 +87,96 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="EditQuantityModal" tabindex="-1" aria-labelledby="EditQuantityModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Quantity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <div class="col-4 mb-6">
+                            <label for="product_id" class="col-form-label">ID:</label>
+                            <input type="text" class="form-control" id="product_id" name="product_id" readonly>
+                        </div>
+                        <div class="col-8 mb-6">
+                            <label for="product_name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="product_name" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="product_quantity" class="col-form-label">Quantity</label>
+                        <input type="number" class="form-control" id="product_quantity" name="product_quantity">
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancel_edit">Cancel</button>
+                <button class="btn btn-success text-light" id="save_edit">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function edit(elem){
+        $('#EditQuantityModal').modal('toggle');
+
+        $('#product_id').val(elem.dataset.id)
+        $('#product_name').val(elem.dataset.name)
+        $('#product_quantity').attr("placeholder", elem.dataset.qty)
+        $('#product_quantity').val("")
+
+    }
+
+
+    $(document).ready(function(){
+
+        // Send Ajax and edit Quantity
+        $("#save_edit").click(function(){
+
+            if(confirm('Save Changes?')){
+                // Ajax request
+                $.ajax({
+                    type: 'POST',
+                    url: "{% url 'update_quantity' %}",
+                    data: {
+                        "id":  $('#product_id').val(),
+                        "quantity": $('#product_quantity').val(),
+                    },
+                    success: function (response) {
+
+                        // Reloads page after success saving
+                        location.reload();
+
+                    },
+                    error: function (response) {
+                        console.log(response)
+                    }
+                })
+
+                // Close Modal
+                $('#EditQuantityModal').modal('toggle');
+            }
+
+        })
+
+
+        $("#cancel_edit").click(function(){
+            // Close Modal
+            $('#EditQuantityModal').modal('toggle');
+        })
+
+    });
+</script>
 
 {% endblock %}

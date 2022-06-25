@@ -1,7 +1,8 @@
-from itertools import product
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
+
+from django.views.decorators.csrf import csrf_exempt
 
 # Pagination
 from django.core.paginator import Paginator
@@ -20,7 +21,19 @@ def index(request):
     no_rows         = 5
 
     # Set Up Pagination
-    paginator       = Paginator(Purchase.objects.all().order_by('-id'), no_rows)
+    paginator       = Paginator(
+                            Purchase.objects
+                                    .all()
+                                    .values(
+                                        'id',
+                                        'quantity',
+                                        'status',
+                                        'created_at',
+                                        'product_id__product_name'
+                                    )
+                                    .order_by('-id'), no_rows
+                            )
+                    
 
     # Track the page
     page            = request.GET.get('page')
@@ -59,3 +72,23 @@ def add(request):
     product.save()
 
     return HttpResponseRedirect(reverse('purchases'))
+
+def delete(request, id):
+
+    purchase  = Purchase.objects.get(id = id)
+    purchase.delete()
+    return HttpResponseRedirect(reverse('purchases'))
+
+@csrf_exempt
+def save_edit_quantity(request):
+
+
+    if request.method == "POST":
+
+        purchase  = Purchase.objects.get(id = request.POST['id'])
+
+        purchase.quantity = request.POST['quantity']
+        purchase.save()
+        
+        return JsonResponse({'quantity': purchase.quantity}, safe=False)
+
