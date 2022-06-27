@@ -1,6 +1,6 @@
 from datetime import datetime
 from math import prod
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render
 
@@ -107,4 +107,13 @@ def update(request, id):
     product.save()
 
     return HttpResponseRedirect(reverse('products'))
+
+def autocomplete(request):
+    if 'term' in request.get:
+        qs = Product.objects.filter(title_istartswitch=request.GET.get('term'))
+        product_name = list()
+        for products in qs:
+            product_name.append(products.product_name)
+        return JsonResponse(product_name, safe=False)
+    return render(request, 'dashboard')
 
