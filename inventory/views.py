@@ -1,10 +1,11 @@
 from calendar import month
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render
 
 from django.db.models import Sum, F, Count
 from django.db.models.functions import TruncMonth, TruncYear
+from pkg_resources import safe_extra
 
 from products.models import Product
 
@@ -16,8 +17,10 @@ from datetime import date, datetime
 
 from rest_framework import serializers
 
-# Import models from Purchases, products, orders, suppliers
+from django.contrib.auth.decorators import login_required
 
+# Import models from Purchases, products, orders, suppliers
+@login_required
 def dashboard(request):
 
     # Total Number of Products
@@ -118,3 +121,22 @@ def dashboard(request):
     # return HttpResponse(template.render(context, request))
 
     return HttpResponse('')
+
+@login_required
+def search(request):
+
+    # print('term' in request.GET)
+
+    # return HttpResponse(request.GET['term'])
+
+    if 'term' in request.GET:
+
+        query_products = Product.objects.filter(product_name__icontains=request.GET['term'])
+
+        products = list()
+        for product in query_products:
+            products.append({'label' : product.product_name, 'value': {'id': product.id, 'url': request.build_absolute_uri('/') + 'products/view/' + str(product.id)}})
+
+        return JsonResponse(products, safe=False)
+
+    # return JsonResponse('products', safe=False)

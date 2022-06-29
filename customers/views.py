@@ -6,10 +6,12 @@ from datetime import datetime
 
 from .models import Customer
 
+from django.contrib.auth.decorators import login_required
+
 # Pagination
 from django.core.paginator import Paginator
 
-
+@login_required
 def index(request):
 
     # Number of rows to display

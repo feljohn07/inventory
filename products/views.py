@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.shortcuts import render
 
+from django.contrib.auth.decorators import login_required
+
 # Pagination
 from django.core.paginator import Paginator
 
@@ -18,6 +20,7 @@ from purchases.models import Purchase
 from orders.models import Order
 
 
+@login_required
 def index(request, *args, **kwargs):
 
     # Number of rows to display
@@ -78,6 +81,7 @@ def index(request, *args, **kwargs):
     return render(request,'products/index.html', context)
 
 
+@login_required
 def add_view(request):
 
     suppliers = Supplier.objects.all()
@@ -85,6 +89,7 @@ def add_view(request):
     return render(request,'products/add.html', {'suppliers': suppliers})
 
 
+@login_required
 def add(request):
 
     # return HttpResponse(request.POST['supplier_id'])
@@ -104,6 +109,7 @@ def add(request):
     return HttpResponseRedirect(reverse('products'))
 
 
+@login_required
 def update_view(request, id):
     product = Product.objects.get(id=id)
     # return HttpResponse(product.supplier_id)
@@ -112,6 +118,7 @@ def update_view(request, id):
     return render(request,'products/update.html', {'product':product, 'supplier':supplier.supplier})
 
 
+@login_required
 def update(request, id):
 
     product = Product.objects.get(id=id)
@@ -126,6 +133,7 @@ def update(request, id):
 
     return HttpResponseRedirect(reverse('products'))
 
+@login_required
 def delete(request, id):
     product = Product.objects.get(id=id)
 

@@ -6,5 +6,5 @@ urlpatterns = [
     path('add/', views.add_view, name='new_purchase'),
     path('add/save/', views.add),
     path('delete/<int:id>', views.delete),
-    path('edit-quantity/', views.save_edit_quantity, name='update_quantity'),
+    path('edit-quantity/', views.save_edit_quantity, name='update_purchase_quantity'),
 ]

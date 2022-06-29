@@ -39,6 +39,7 @@
                             <th>Address</th>
                             <th>Date Added</th>
                             <th>Date Updated</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +52,10 @@
                             <td>{{x.customer_address}}</td>
                             <td>{{x.date_added}}</td>
                             <td>{{x.date_updated}}</td>
+                            <td>
+                                <a class="btn btn-sm btn-warning" href="update/{{ x.id }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'update/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

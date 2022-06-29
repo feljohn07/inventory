@@ -48,8 +48,8 @@
                             <td>{{ x.product_id__product_name }}</td>
                             <td>{{ x.quantity }}</td>
                             <td>
-                                <a class="btn btn-sm btn-warning m-1" onclick="edit(this)" data-id="{{ x.id }}" data-name="{{ x.product_id__product_name }}" data-qty="{{ x.quantity }}">Edit Qty</a>
-                                <button class="btn btn-sm btn-danger m-1" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}">Delete</button>
+                                <a class="btn btn-sm btn-warning m-1" onclick="edit(this)" data-id="{{ x.id }}" data-name="{{ x.product_id__product_name }}" data-qty="{{ x.quantity }}"><i class="fas fa-edit"></i></a>
+                                <button class="btn btn-sm btn-danger m-1" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></button>
                             </td>
                         {% endfor %}
 
@@ -148,7 +148,7 @@
                 // Ajax request
                 $.ajax({
                     type: 'POST',
-                    url: "{% url 'update_quantity' %}",
+                    url: "{% url 'update_purchase_quantity' %}",
                     data: {
                         id:  $('#product_id').val(),
                         quantity: $('#product_quantity').val(),

@@ -43,7 +43,7 @@
                             <th>Total Purchased</th>
                             <th>Total Ordered</th>
                             <th>Supplier</th>
-                            <th>Action</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,7 +51,7 @@
                         {% for x in products %}
                         <tr>
                             <td>{{ x.id }}</td>          
-                            <td><a href="update/{{ x.id }}">{{ x.product_name }}</a></td>                 
+                            <td><a>{{ x.product_name }}</a></td>                 
                             <td>&#8369; {{ x.price_per_piece }}</td>
                             <td>&#8369; {{ x.retail_per_piece }}</td>
                             <td>{{ x.product_category }}</td>
@@ -60,26 +60,13 @@
                             <td>{{ x.inventory_received }}</td>
                             <td>{{ x.inventory_shipped }}</td>
                             <td>{{ x.supplier__supplier }}</td>
-                            <td><button class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}">Delete</button></td>
+                            <td><button class="btn btn-sm btn-warning" onclick="window.location.href = 'update/{{ x.id }}'"><i class="fas fa-edit"></i></button></td>
+                            <td><button class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></button></td>
+
                         </tr>
                         {% endfor %}
 
                     </tbody>
-                    <!-- <tfoot>
-                        <tr>
-                            <td><strong>ID</strong></td>
-                            <td><strong>Product</strong></td>
-                            <td><strong>Cost</strong></td>
-                            <td><strong>Retail</strong></td>
-                            <td><strong>Variant</strong></td>
-                            <td><strong>Category</strong></td>
-                            <td><strong>On hand</strong></td>
-                            <td><strong>Minimum</strong></td>
-                            <td><strong>Total Purchased</strong></td>
-                            <td><strong>Total Ordered</strong></td>
-                            <td><strong>Supplier</strong></td>
-                        </tr>
-                    </tfoot> -->
                 </table>
             </div>
 
@@ -129,7 +116,7 @@
             <div class="card card-shadow">
                 <div class="card-header py-3">
                     <div class="row">
-                        <div class="col-6"><p class="text-primary m-0 fw-bold"><a  href="{% url 'new_purchase' %}" class="btn btn-primary btn-sm">Create Purchase</a></p></div>
+                        <div class="col-6"><p class="text-primary m-0 fw-bold"><a  href="{% url 'new_purchase' %}" class="btn btn-primary btn-sm">Make Purchase</a></p></div>
                         <div class="col-6 text-end"><span class="text-primary m-0 fw-bold pe-2">Recent Purchases</span></div>
                     </div>
                     
@@ -147,7 +134,7 @@
                                     <th>Date Time</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Action</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -180,7 +167,7 @@
                 <div class="card-header py-3">
                     <div class="row">
                         <div class="col-6">
-                            <p class="text-primary m-0 fw-bold"><a  href="{% url 'new_order' %}" class="btn btn-primary btn-sm">Add Order</a></p>
+                            <p class="text-primary m-0 fw-bold"><a  href="{% url 'new_order' %}" class="btn btn-primary btn-sm">Make Order</a></p>
                         </div>
                         <div class="col-6 text-end"><span class="text-primary m-0 fw-bold pe-2">Recent Orders</span></div>
                     </div>
@@ -198,7 +185,7 @@
                                     <th>Date Time</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Action</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>

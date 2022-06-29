@@ -36,15 +36,20 @@
                             <th>Supplier Name</th>
                             <th>Address</th>
                             <th>Date Added</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for x in suppliers %}
                         <tr>
-                            <td><a href="update/{{ x.id }}">{{x.id}}</a></td>
+                            <td>{{x.id}}</td>
                             <td>{{x.supplier}}</td>
                             <td>{{x.address}}</td>
                             <td>{{x.date_added}}</td>
+                            <td>
+                                <a class="btn btn-sm btn-warning" href="update/{{ x.id }}"><i class="fas fa-edit"></i></a>
+                                <a class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'update/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
