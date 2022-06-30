@@ -1,0 +1,62 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+    <h3 class="text-dark mb-4">Product / Details </h3>
+    <div class="card shadow">
+        <div class="card-body">
+
+            <form>
+
+                <div class="form-group mb-3">
+                    <label for="supplier_id">Supplier</label>
+                    <select id="supplier_id" name="supplier_id" class="form-select" disabled>
+                        <option value="" selected >{{ supplier }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="product_name" class="form-label">Product Name</label>
+                    <input name="product_name" type="text" class="form-control form-control-md" id="product_name" value="{{ product.product_name }}" readonly>
+                    <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+
+                <div class="row">
+                    <div class="form-group mb-3 col-md-6">
+                        <label for="price_per_piece" class="form-label">Cost (per Pcs)</label>
+                        <input name="price_per_piece" type="number" step="any" class="form-control form-control-md" id="price_per_piece" value="{{ product.price_per_piece }}" readonly>
+                        <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                    <div class="form-group mb-3 col-md-6">
+                        <label for="retail_per_piece" class="form-label">Price (SRP)</label>
+                        <input name="retail_per_piece" type="number" step="any" class="form-control form-control-md" id="price_per_piece" value="{{ product.retail_per_piece }}" readonly>
+                        <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="product_category" class="form-label">Product Category</label>
+                    <input name="product_category" type="text" class="form-control form-control-md" id="product_category" value="{{ product.product_category }}" readonly>
+                    <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
+                </div>
+
+                <div class="row">
+                    <div class="form-group mb-3 col-md-6">
+                        <label for="minimum_required" class="form-label">Minimum Required</label>
+                        <input name="minimum_required" type="number" class="form-control form-control-md" id="product_category" value="{{ product.minimum_required }}" readonly>
+                        <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
+                    </div>
+                </div>
+          
+                <a class="btn btn-secondary " href="{% url 'products' %}">Back</a>
+                <a class="btn btn-warning" onclick="window.location.href = '/products/update/{{ product.id }}'">Edit</a>
+            </form>
+            
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from datetime import datetime
 from itertools import product
+from unicodedata import category
 from django.db import models
 from django.forms import CharField, DateTimeField
 
@@ -15,19 +16,11 @@ class Product(models.Model):
     inventory_on_hand   = models.IntegerField(default=0, blank=True, null=True)
     minimum_required    = models.IntegerField(default=0, blank=True, null=True)
 
-    supplier            = models.ForeignKey( Supplier , null=True ,on_delete=models.SET_NULL)
-    created_at          = models.DateField( default = datetime.now)
+    supplier            = models.ForeignKey(Supplier , null=True ,on_delete=models.CASCADE)
+    created_at          = models.DateField(default = datetime.now)
     updated_at          = models.DateField()
 
-    
 
-
-# class Orders(models.Model):
-#     orders = ''
-    # product id
-    # customer id
-    # quantity
-    # created_at
-    # updated_at
-
-# class Category(models.Model):
+class Category(models.Model):
+    category = models.CharField(max_length=125)
+    created_at = models.DateField( default = datetime.now)

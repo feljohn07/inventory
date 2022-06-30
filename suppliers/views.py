@@ -1,15 +1,14 @@
-from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
 from .models import Supplier
-
 from datetime import datetime
 
 # Pagination
 from django.core.paginator import Paginator
-
 from django.contrib.auth.decorators import login_required
+
 
 @login_required
 def index(request):
@@ -56,10 +55,32 @@ def update_view(request, id):
 
 @login_required
 def update(request, id):
-    # return HttpResponse(id)
+
     supplier            = Supplier.objects.get(id=id)
     supplier.supplier   = request.POST['supplier']
     supplier.address    = request.POST['address']
     supplier.save()
 
     return HttpResponseRedirect(reverse('suppliers'))
+
+def delete(request, id):
+    supplier = Supplier.objects.get(id=id)
+    supplier.delete()
+    
+    return HttpResponseRedirect(reverse('suppliers'))
+
+
+@login_required
+def search_supplier(request):
+
+    if 'term' in request.GET:
+
+        # Query 
+        query_suppliers = Supplier.objects.filter(supplier__icontains = request.GET['term'])
+
+        suppliers = list()
+
+        for supplier in query_suppliers:
+            suppliers.append({'label' : supplier.supplier, 'value': {'id': supplier.id, 'url': request.build_absolute_uri('/') + 'suppliers/view/' + str(supplier.id)}})
+
+        return JsonResponse(suppliers, safe=False)

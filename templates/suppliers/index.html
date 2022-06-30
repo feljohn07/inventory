@@ -11,19 +11,14 @@
 
             <div class="row">
                 <div class="col-md-6 text-nowrap">
-                    <!-- <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                        <label class="form-label">Show
-                            <select class="d-inline-block form-select form-select-sm">
-                                <option value="10" selected="">10</option>
-                                <option value="25">25</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                            </select>
-                        </label>
-                    </div> -->
                 </div>
                 <div class="col-md-6">
-                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label">
+                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"><input id="search"  class="bg-light form-control border-1 small" type="text" placeholder="Search Supplier ...">
+                            </div>
+                        </form>
+                    </div>
                 </div>
                 
             </div>
@@ -48,20 +43,11 @@
                             <td>{{x.date_added}}</td>
                             <td>
                                 <a class="btn btn-sm btn-warning" href="update/{{ x.id }}"><i class="fas fa-edit"></i></a>
-                                <a class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'update/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></a>
+                                <a class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
                     </tbody>
-                    <!-- <tfoot>
-                        <tr>
-                            <td><strong>ID</strong></td>
-                            <td><strong>Supplier Name</strong></td>
-                            <td><strong>Address</strong></td>
-                            <td><strong>Date Added</strong></td>
-
-                        </tr>
-                    </tfoot> -->
                 </table>
             </div>
 
@@ -95,4 +81,43 @@
     </div>
 </div>
 
+{% endblock %}
+
+
+{% block script %}
+
+<script> 
+
+    $( function() {
+    
+        $("#search").autocomplete({
+            minLength: 1,
+            appendTo: $(this).parent(),
+            source: "{% url 'search_supplier' %}",
+            
+            select: function (event, ui) {
+                event.preventDefault();
+                console.log('data: ' + ui.item.value.id)
+                console.log('url when clicked: ' + ui.item.value.url )
+                window.location.href = ui.item.value.url
+            },
+    
+            focus: function (event, ui) {
+                event.preventDefault();
+                $("#product_search").val(ui.item.label)
+                $("#product_search").val(ui.item.label)
+            },
+            
+        }).data("ui-autocomplete")._renderItem = function (ul, item) {
+            return $("<li></li>")
+                .data("item.autocomplete", item)
+                .append("<a class='list-group-item' href='" + item.value.url + "'>" + item.label + "</a>")
+                .appendTo(ul);
+        };
+    
+    });
+        
+    
+</script>
+    
 {% endblock %}

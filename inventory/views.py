@@ -120,18 +120,3 @@ def dashboard(request):
 
     return HttpResponse('')
 
-@login_required
-def search(request):
-
-    if 'term' in request.GET:
-
-        query_products = Product.objects.filter(product_name__icontains=request.GET['term'])
-
-        products = list()
-        for product in query_products:
-            products.append({'label' : product.product_name, 'value': {'id': product.id, 'url': request.build_absolute_uri('/') + 'products/view/' + str(product.id)}})
-
-        return JsonResponse(products, safe=False)
-
-    # return JsonResponse('products', safe=False)
-

@@ -1,6 +1,7 @@
 from datetime import datetime
+from itertools import product
 from math import prod
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render
 
@@ -82,10 +83,18 @@ def index(request, *args, **kwargs):
 
 
 @login_required
+def view_product(request, id):
+
+    product = Product.objects.get(id = id)
+    supplier = Supplier.objects.get(id = product.supplier_id)
+    
+    return render(request,'products/view.html', {'product': product, 'supplier':supplier.supplier})
+
+
+@login_required
 def add_view(request):
 
     suppliers = Supplier.objects.all()
-    
     return render(request,'products/add.html', {'suppliers': suppliers})
 
 
@@ -112,7 +121,6 @@ def add(request):
 @login_required
 def update_view(request, id):
     product = Product.objects.get(id=id)
-    # return HttpResponse(product.supplier_id)
     supplier = Supplier.objects.get(id = product.supplier_id)
 
     return render(request,'products/update.html', {'product':product, 'supplier':supplier.supplier})
@@ -122,13 +130,11 @@ def update_view(request, id):
 def update(request, id):
 
     product = Product.objects.get(id=id)
-
     product.product_name        = request.POST['product_name']
     product.price_per_piece     = request.POST['price_per_piece']
     product.retail_per_piece    = request.POST['retail_per_piece']
     product.product_category    = request.POST['product_category']
     product.minimum_required    = request.POST['minimum_required'] 
-
     product.save()
 
     return HttpResponseRedirect(reverse('products'))
@@ -137,7 +143,20 @@ def update(request, id):
 def delete(request, id):
     product = Product.objects.get(id=id)
 
-    # return HttpResponse(product)
     product.delete()
     return HttpResponseRedirect(reverse('products'))
+
+
+@login_required
+def search(request):
+
+    if 'term' in request.GET:
+
+        query_products = Product.objects.filter(product_name__icontains=request.GET['term'])
+
+        products = list()
+        for product in query_products:
+            products.append({'label' : product.product_name, 'value': {'id': product.id, 'url': request.build_absolute_uri('/') + 'products/view/' + str(product.id)}})
+
+        return JsonResponse(products, safe=False)
 

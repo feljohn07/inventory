@@ -110,51 +110,12 @@
     <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'assets/js/bs-init.js' %}"></script>
     <script src="{% static 'assets/js/theme.js' %}"></script>
-    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <!-- MAKE THIS OFFLINE -->
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script> 
 
-<script>
-    
+{% block script %}
 
-$( function() {
-
-
-    $("#product_search").autocomplete({
-        minLength: 1,
-        appendTo: $(this).parent(),
-        source: "{% url 'search' %}",
-        
-        select: function (event, ui) {
-            event.preventDefault();
-            console.log('data: ' + ui.item.value.id)
-            console.log('url when clicked: ' + ui.item.value.url )
-            window.location.href = ui.item.value.url
-        },
-
-        focus: function (event, ui) {
-            event.preventDefault();
-            $("#product_search").val(ui.item.label)
-            $("#product_search").val(ui.item.label)
-        },
-        
-
-        // change: function( event, ui ) {
-        //     event.preventDefault();
-        //     alert('hello')
-        // },
-
-        
-    }).data("ui-autocomplete")._renderItem = function (ul, item) {
-        return $("<li></li>")
-            .data("item.autocomplete", item)
-            .append("<a class='list-group-item' href='" + item.value.url + "'>" + item.label + "</a>")
-            .appendTo(ul);
-    };
-
-});
-    
-
-</script>
-
+{% endblock %}
 
 </body>
 
