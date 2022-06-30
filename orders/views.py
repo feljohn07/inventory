@@ -9,10 +9,12 @@ from .models import Order
 from purchases.models import Product
 
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 # Datetime
 from datetime import datetime
 
+@login_required
 def index(request):
 
     # Number of rows to display
@@ -42,6 +44,8 @@ def index(request):
     }
     return render(request, 'orders/index.html', context)
 
+
+@login_required
 def add_view(request):
 
     products = Product.objects.all()
@@ -49,6 +53,7 @@ def add_view(request):
     return render(request, 'orders/add.html', {'products': products})
 
 
+@login_required
 def add(request):
 
     order = Order(
@@ -68,6 +73,8 @@ def add(request):
 
     return HttpResponseRedirect(reverse('orders'))
 
+
+@login_required
 def delete(request, id):
     
     order = Order.objects.get(id = id)
@@ -75,7 +82,9 @@ def delete(request, id):
 
     return HttpResponseRedirect(reverse('orders'))
 
+
 @csrf_exempt
+@login_required
 def save_edit_quantity(request):
 
 

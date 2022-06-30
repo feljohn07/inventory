@@ -15,8 +15,6 @@ from orders.models import Order
 
 from datetime import date, datetime
 
-from rest_framework import serializers
-
 from django.contrib.auth.decorators import login_required
 
 # Import models from Purchases, products, orders, suppliers
@@ -125,10 +123,6 @@ def dashboard(request):
 @login_required
 def search(request):
 
-    # print('term' in request.GET)
-
-    # return HttpResponse(request.GET['term'])
-
     if 'term' in request.GET:
 
         query_products = Product.objects.filter(product_name__icontains=request.GET['term'])
@@ -140,3 +134,4 @@ def search(request):
         return JsonResponse(products, safe=False)
 
     # return JsonResponse('products', safe=False)
+

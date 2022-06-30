@@ -3,6 +3,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 # Pagination
 from django.core.paginator import Paginator
@@ -15,6 +16,8 @@ from products.models import Product
 # Datetime
 from datetime import datetime
 
+
+@login_required
 def index(request):
 
     # Number of rows to display
@@ -51,10 +54,14 @@ def index(request):
 
     return render(request, 'purchases/index.html', context)
 
+
+@login_required
 def add_view(request):
     products = Product.objects.all()
     return render(request, 'purchases/add.html', {'products': products} )
 
+
+@login_required
 def add(request):
 
     purchase = Purchase(
@@ -73,13 +80,17 @@ def add(request):
 
     return HttpResponseRedirect(reverse('purchases'))
 
+
+@login_required
 def delete(request, id):
 
     purchase  = Purchase.objects.get(id = id)
     purchase.delete()
     return HttpResponseRedirect(reverse('purchases'))
 
+
 @csrf_exempt
+@login_required
 def save_edit_quantity(request):
 
 

@@ -9,7 +9,9 @@ from datetime import datetime
 # Pagination
 from django.core.paginator import Paginator
 
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def index(request):
 
     # Number of rows to display
@@ -30,10 +32,12 @@ def index(request):
     return render(request,'suppliers/index.html', context)
 
 
+@login_required
 def add_view(request):
     return render(request,'suppliers/add.html', {})
 
 
+@login_required
 def add(request):
     suppliers = Supplier(
         supplier        = request.POST['supplier'], 
@@ -44,11 +48,13 @@ def add(request):
     return HttpResponseRedirect(reverse('suppliers'))
 
 
+@login_required
 def update_view(request, id):
     supplier = Supplier.objects.get(id=id)
     return render(request,'suppliers/update.html', {'supplier':supplier})
 
 
+@login_required
 def update(request, id):
     # return HttpResponse(id)
     supplier            = Supplier.objects.get(id=id)
