@@ -117,9 +117,6 @@
                     
                 </div>
                 <div class="card-body">
-                    
-
-
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">
@@ -129,7 +126,6 @@
                                     <th>Date Time</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,7 +136,6 @@
                                     <td>{{ x.created_at }}</td>                     
                                     <td>{{ x.product_id__product_name }}</td>
                                     <td>{{ x.quantity }}</td>
-                                    <td><a class="btn btn-sm btn-primary">View</a></td>
                                 {% endfor %}
         
                                 </tr>
@@ -149,9 +144,6 @@
                     </div>
                     
                     <a href="{% url 'purchases' %}">View All</a>
-
-
-
 
                 </div>
             </div>
@@ -168,9 +160,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    
-
-
 
                     <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
                         <table class="table my-0" id="dataTable">
@@ -180,7 +169,6 @@
                                     <th>Date Time</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -191,7 +179,6 @@
                                     <td>{{ x.created_at }}</td>                 
                                     <td>{{ x.product_id__product_name }}</td>
                                     <td>{{ x.quantity }}</td>
-                                    <td><a class="btn btn-sm btn-primary">View</a></td>
                                 {% endfor %}
         
                                 </tr>
@@ -201,10 +188,6 @@
 
                     <a href="{% url 'orders' %}">View All</a>
 
-
-
-
-    
                 </div>
             </div>
         </div>
@@ -242,12 +225,6 @@
                 $("#product_search").val(ui.item.label)
                 $("#product_search").val(ui.item.label)
             },
-            
-    
-            // change: function( event, ui ) {
-            //     event.preventDefault();
-            //     alert('hello')
-            // },
     
             
         }).data("ui-autocomplete")._renderItem = function (ul, item) {
