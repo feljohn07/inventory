@@ -19,6 +19,7 @@
                             <th>Date Time</th>
                             <th>Product</th>
                             <th>Quantity</th>
+                            <th>Customer</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -30,6 +31,7 @@
                             <td>{{ x.created_at }}</td>                     
                             <td>{{ x.product_id__product_name }}</td>
                             <td>{{ x.quantity }}</td>
+                            <td>{{ x.customer_id_id__firstname }}</td>
                             <td>
                                 <a class="btn btn-sm btn-warning m-1" onclick="edit(this)" data-id="{{ x.id }}" data-name="{{ x.product_id__product_name }}" data-qty="{{ x.quantity }}"><i class="fas fa-edit"></i></a>
                                 <button class="btn btn-sm btn-danger" onclick="if(confirm('Delete this row?')){window.location.href = 'delete/{{ x.id }}'}"><i class="fas fa-trash-alt"></i></button>
@@ -139,8 +141,8 @@
                     success: function (response) {
 
                         // Reloads page after success saving
-                        location.reload();
-                        alert(response.quantity)
+                        // location.reload();
+                        console.log(response)
 
                     },
                     error: function (response) {

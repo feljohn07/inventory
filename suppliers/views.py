@@ -63,6 +63,8 @@ def update(request, id):
 
     return HttpResponseRedirect(reverse('suppliers'))
 
+
+@login_required
 def delete(request, id):
     supplier = Supplier.objects.get(id=id)
     supplier.delete()
@@ -84,3 +86,11 @@ def search_supplier(request):
             suppliers.append({'label' : supplier.supplier, 'value': {'id': supplier.id, 'url': request.build_absolute_uri('/') + 'suppliers/view/' + str(supplier.id)}})
 
         return JsonResponse(suppliers, safe=False)
+
+
+@login_required
+def view_supplier(request, id):
+
+    supplier = Supplier.objects.get(id = id)
+    
+    return render(request,'suppliers/view.html', {'supplier': supplier})

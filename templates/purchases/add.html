@@ -19,8 +19,8 @@
 
                 <div class="col-lg-6 form-group mt-3">
                     <label for="product_id">Product</label>
-                    <select id="product_id" name="product_id" class="form-select">
-                        <option selected>Selected Product</option>
+                    <select id="product_id" name="product_id" class="form-select required">
+                        <option>Selected Product</option>
                         {% for x in products %}
                         <option value="{{ x.id }}">{{ x.product_name }}</option>
                         {% endfor %}

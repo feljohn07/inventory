@@ -7,6 +7,4 @@ urlpatterns = [
     path('add/save/', views.add),
     path('delete/<int:id>', views.delete),
     path('edit-quantity/', views.save_edit_quantity, name='update_order_quantity'),
-    # add update
-    # add delete
 ]

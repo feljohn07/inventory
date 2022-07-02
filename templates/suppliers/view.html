@@ -1,0 +1,29 @@
+{% extends 'layout/layout.html' %}
+{% block content %}
+
+<div class="container-fluid">
+
+<h3 class="text-dark mb-4">Suppliers / Details</h3>
+    <div class="card shadow">
+        <div class="card-body">
+
+            <form action="save/{{ supplier.id }}" method="post">
+                {% csrf_token %}
+
+                <div class="form-group mb-3">
+                    <label for="supplier" class="form-label">Supplier Name</label>
+                    <input name="supplier" type="text" class="form-control form-control-md" id="supplier" value="{{ supplier.supplier }}" readonly>
+                </div>
+                
+                <div class="form-group mt-3 mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <input name="address" type="text" class="form-control form-control-md" id="supplier" value="{{ supplier.address }}" readonly>
+                </div>
+                <a class="btn btn-secondary" href="{% url 'suppliers' %}">Back</a>
+                <a class="btn btn-warning" onclick="window.location.href = '/suppliers/update/{{ supplier.id }}'">Edit</a>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

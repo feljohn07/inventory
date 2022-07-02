@@ -8,5 +8,6 @@ urlpatterns = [
     path('update/<int:id>', views.update_view),
     path('update/save/<int:id>', views.update),
     path('delete/<int:id>', views.delete),
-    path('update/', views.search_supplier, name='search_supplier'),
+    path('view/<int:id>', views.view_supplier),
+    path('search/', views.search_supplier, name='search_supplier'),
 ]

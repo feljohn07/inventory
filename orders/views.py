@@ -1,9 +1,12 @@
 from ast import Or
+from math import prod
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.shortcuts import render
 
 from django.core.paginator import Paginator
+
+from customers.models import Customer
 
 from .models import Order
 from purchases.models import Product
@@ -27,7 +30,8 @@ def index(request):
                                 'id',
                                 'created_at',
                                 'quantity',
-                                'product_id__product_name'
+                                'product_id__product_name',
+                                'customer_id_id__firstname'
                             )
                             .order_by('-id')
                         , no_rows)
@@ -49,8 +53,9 @@ def index(request):
 def add_view(request):
 
     products = Product.objects.all()
+    customer = Customer.objects.all()
 
-    return render(request, 'orders/add.html', {'products': products})
+    return render(request, 'orders/add.html', {'products': products, 'customer': customer})
 
 
 @login_required
@@ -58,6 +63,7 @@ def add(request):
 
     order = Order(
         product_id  = Product.objects.get(id = request.POST['product_id']), # get the instance of the Model object Product
+        customer_id  = Customer.objects.get(id = request.POST['customer_id']), # get the instance of the Model object Product
         quantity    = request.POST['quantity'],
         created_at  = request.POST['created_at'],
         updated_at  = datetime.now(),
@@ -78,7 +84,12 @@ def add(request):
 def delete(request, id):
     
     order = Order.objects.get(id = id)
+    product  = Product.objects.get(id = order.product_id_id)
+    product.inventory_shipped  = product.inventory_shipped - int(order.quantity)
+    product.inventory_on_hand   = product.inventory_on_hand + int(order.quantity)
+
     order.delete()
+    product.save()
 
     return HttpResponseRedirect(reverse('orders'))
 
@@ -91,8 +102,13 @@ def save_edit_quantity(request):
     if request.method == "POST":
 
         order  = Order.objects.get(id = request.POST['id'])
+        product  = Product.objects.get(id = order.product_id_id)
+
+        product.inventory_shipped  = product.inventory_shipped + (int(request.POST['quantity']) - int(order.quantity))
+        product.inventory_on_hand   = product.inventory_on_hand - (int(request.POST['quantity']) - int(order.quantity))
 
         order.quantity = request.POST['quantity']
         order.save()
+        product.save()
         
-        return JsonResponse({'quantity': order.quantity}, safe=False)
+        return JsonResponse({'quantity': int(request.POST['quantity']) - int(order.quantity)}, safe=False)

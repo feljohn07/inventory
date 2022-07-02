@@ -24,3 +24,6 @@ class Product(models.Model):
 class Category(models.Model):
     category = models.CharField(max_length=125)
     created_at = models.DateField( default = datetime.now)
+
+    def __str__(self):
+        return '%s' % self.category

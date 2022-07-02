@@ -1,9 +1,11 @@
 from datetime import datetime
 from itertools import product
 from math import prod
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.urls import reverse
 from django.shortcuts import render
+
+from .forms import ProductForm
 
 from django.contrib.auth.decorators import login_required
 
@@ -86,34 +88,35 @@ def index(request, *args, **kwargs):
 def view_product(request, id):
 
     product = Product.objects.get(id = id)
-    supplier = Supplier.objects.get(id = product.supplier_id)
     
-    return render(request,'products/view.html', {'product': product, 'supplier':supplier.supplier})
+    if product.supplier.id is not None:
+        supplier = Supplier.objects.get(id = product.supplier_id)
+        return render(request,'products/view.html', {'product': product, 'supplier': supplier.supplier})
+    else:
+        return render(request,'products/view.html', {'product': product})
 
 
 @login_required
 def add_view(request):
 
-    suppliers = Supplier.objects.all()
-    return render(request,'products/add.html', {'suppliers': suppliers})
+    return render(request,'products/add.html', {'form': ProductForm})
 
 
 @login_required
 def add(request):
 
-    # return HttpResponse(request.POST['supplier_id'])
     product = Product(
-        supplier_id         = request.POST['supplier_id'], 
+        supplier_id         = request.POST['supplier'], 
         product_name        = request.POST['product_name'], 
         price_per_piece     = request.POST['price_per_piece'],
         retail_per_piece    = request.POST['retail_per_piece'],
-        product_category    = request.POST['product_category'],
+        # Initial Inventory
         inventory_received  = request.POST['inventory_received'],
         inventory_on_hand   = request.POST['inventory_received'],
         minimum_required    = request.POST['minimum_required'],
         updated_at          = datetime.now(),
+
     )
-    # return HttpResponse()
     product.save()
     return HttpResponseRedirect(reverse('products'))
 
@@ -123,7 +126,7 @@ def update_view(request, id):
     product = Product.objects.get(id=id)
     supplier = Supplier.objects.get(id = product.supplier_id)
 
-    return render(request,'products/update.html', {'product':product, 'supplier':supplier.supplier})
+    return render(request,'products/update.html', {'product':product, 'supplier': supplier, 'form': ProductForm})
 
 
 @login_required
@@ -133,7 +136,6 @@ def update(request, id):
     product.product_name        = request.POST['product_name']
     product.price_per_piece     = request.POST['price_per_piece']
     product.retail_per_piece    = request.POST['retail_per_piece']
-    product.product_category    = request.POST['product_category']
     product.minimum_required    = request.POST['minimum_required'] 
     product.save()
 
@@ -152,7 +154,7 @@ def search(request):
 
     if 'term' in request.GET:
 
-        query_products = Product.objects.filter(product_name__icontains=request.GET['term'])
+        query_products = Product.objects.filter(product_name__icontains = request.GET['term'])
 
         products = list()
         for product in query_products:

@@ -30,7 +30,6 @@ def index(request):
                                     .values(
                                         'id',
                                         'quantity',
-                                        'status',
                                         'created_at',
                                         'product_id__product_name'
                                     )
@@ -67,7 +66,6 @@ def add(request):
     purchase = Purchase(
         product_id  = Product.objects.get(id = request.POST['product_id']),
         quantity    = request.POST['quantity'],
-        # status
         created_at  = request.POST['created_at'],
         updated_at  = datetime.now(),
     )
@@ -85,7 +83,13 @@ def add(request):
 def delete(request, id):
 
     purchase  = Purchase.objects.get(id = id)
+    product  = Product.objects.get(id = purchase.product_id_id)
+
+    product.inventory_received  = product.inventory_received - int(purchase.quantity)
+    product.inventory_on_hand   = product.inventory_on_hand - int(purchase.quantity)
+
     purchase.delete()
+    product.save()
     return HttpResponseRedirect(reverse('purchases'))
 
 
@@ -93,13 +97,17 @@ def delete(request, id):
 @login_required
 def save_edit_quantity(request):
 
-
     if request.method == "POST":
 
         purchase  = Purchase.objects.get(id = request.POST['id'])
+        product  = Product.objects.get(id = purchase.product_id_id)
+
+        product.inventory_received  = product.inventory_received + (int(request.POST['quantity']) - int(purchase.quantity))
+        product.inventory_on_hand   = product.inventory_on_hand + (int(request.POST['quantity']) - int(purchase.quantity))
 
         purchase.quantity = request.POST['quantity']
         purchase.save()
+        product.save()
         
-        return JsonResponse({'quantity': purchase.quantity}, safe=False)
+        return JsonResponse({'quantity': int(request.POST['quantity']) - int(purchase.quantity) }, safe=False)
 

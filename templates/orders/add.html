@@ -26,6 +26,16 @@
                         {% endfor %}
                     </select>
                 </div>
+                
+                <div class="col-lg-6 form-group mt-3">
+                    <label for="customer_id">Customer</label>
+                    <select id="customer_id" name="customer_id" class="form-select">
+                        <option selected>Selected Customer</option>
+                        {% for x in customer %}
+                        <option value='{{ x.id }}'> {{ x.firstname }} {{ x.middlename }} {{ x.lastname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <div class="col-lg-6 form-group mt-3">
                     <label for="quantity">Product Quantity</label>

@@ -99,3 +99,11 @@ def search_customer(request):
             customers.append({'label' : customer.firstname + ' ' + customer.middlename + '  ' + customer.lastname, 'value': {'id': customer.id, 'url': request.build_absolute_uri('/') + 'customers/view/' + str(customer.id)}})
 
         return JsonResponse(customers, safe=False)
+
+
+@login_required
+def view(request, id):
+
+    customer = Customer.objects.get(id = id)
+    
+    return render(request,'customers/view.html', {'customer': customer})

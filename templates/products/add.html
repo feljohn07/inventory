@@ -11,62 +11,7 @@
             <form action="save/" method="post">
                 {% csrf_token %}
 
-                <div class="form-group mt-3">
-                    <label for="supplier_id">Supplier</label>
-                    <select id="supplier_id" name="supplier_id" class="form-select" required>
-                        <option selected>Selected Supplier</option>
-                        {% for x in suppliers %}
-                        <option value="{{ x.id }}">{{ x.supplier }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <!-- <div class="input-group mb-3">
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile02">
-                        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
-                    </div>
-                    <div class="input-group-append">
-                        <span class="input-group-text" id="">Upload</span>
-                    </div>
-                </div> -->
-
-                <div class="form-group mt-3">
-                    <label for="product_name">Product Name</label>
-                    <input name="product_name" type="text" class="form-control form-control-md mt-1" id="product_name" required>
-                    <small class="form-text text-muted d-none"></small>
-                </div>
-
-                <div class="row mt-3">
-                    <div class="form-group col-md-6">
-                        <label for="price_per_piece" class="form-label">Cost</label>
-                        <input name="price_per_piece" type="number" step="any" class="form-control form-control-md" id="price_per_piece" value="{{ product.price_per_piece }}">
-                        <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="retail_per_piece" class="form-label">Price</label>
-                        <input name="retail_per_piece" type="number" step="any" class="form-control form-control-md" id="price_per_piece" value="{{ product.retail_per_piece }}">
-                        <!-- <div id="supplier" class="form-text">We'll never share your email with anyone else.</div> -->
-                    </div>
-                </div>
-
-                <div class="form-group mt-3">
-                    <label for="product_category">Product Category</label>
-                    <input name="product_category" type="text" class="form-control form-control-md mt-1" id="product_category" required> 
-                    <small class="form-text text-muted d-none">We'll never share your email with anyone else.</small>
-                </div>
-
-                <div class="form-group mt-3">
-                    <label for="inventory_received">Inventory Received</label>
-                    <input name="inventory_received" type="number" class="form-control form-control-md mt-1" id="inventory_received" required>
-                    <small class="form-text text-muted d-none">We'll never share your email with anyone else.</small>
-                </div>
-
-                <div class="form-group mt-3">
-                    <label for="minimum_required">Minimum Required</label>
-                    <input name="minimum_required" type="number" class="form-control form-control-md mt-1" id="minimum_required" required>
-                    <small class="form-text text-muted d-none">We'll never share your email with anyone else.</small>
-                </div>
+                {{form}}
 
                 <input class="btn btn-primary mt-3" type="submit" value="Add Product">
                 <a class="btn btn-secondary mt-3" href="{{request.META.HTTP_REFERER|escape}}">Back</a>
