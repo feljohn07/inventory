@@ -368,7 +368,7 @@
             pointHitRadius: 10,
             pointBorderWidth: 2,
             data: [
-                {% for x in get_monthly_sales %}{{ x }}, {% endfor %}
+                {% for x in get_monthly_sales %}{{ x }}, {% endfor %} // loops then render the dataset elements from the server
             ],
         }],
     },
